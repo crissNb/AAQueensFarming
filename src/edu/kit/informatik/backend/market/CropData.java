@@ -11,7 +11,7 @@ import java.util.Map;
  * @author ufzwe
  * @version 1.0
  */
-public enum VegetableData {
+public enum CropData {
     /**
      * Mushroom is a vegetable with high price and takes 4 rounds to grow.
      */
@@ -37,7 +37,7 @@ public enum VegetableData {
      * In other words, if one vegetable's price varies, the connected vegetable's
      * price will be affected.
      */
-    public static Map<VegetableData, VegetableData> priceConnections = new HashMap<>();
+    public static Map<CropData, CropData> priceConnections = new HashMap<>();
 
     private final String identifier;
     private final String pluralIdentifier;
@@ -49,7 +49,7 @@ public enum VegetableData {
         priceConnections.put(TOMATO, SALAD);
     }
 
-    VegetableData(String identifier, String pluralIdentifier, int[] possiblePrices, int roundsToGrow) {
+    CropData(String identifier, String pluralIdentifier, int[] possiblePrices, int roundsToGrow) {
         this.identifier = identifier;
         this.pluralIdentifier = pluralIdentifier;
         this.possiblePrices = possiblePrices;
@@ -83,7 +83,7 @@ public enum VegetableData {
         return roundsToGrow;
     }
 
-    public VegetableData getPriceConnectedData() {
+    public CropData getPriceConnectedData() {
         return priceConnections.get(this);
     }
 }
