@@ -38,7 +38,11 @@ public class MarketController {
      * @return item once successfully purchased, null if fails
      */
     public GameItem purchaseItem(Player customer, String desiredItem) {
-        return null;
+        try {
+            CropData desiredCrop = CropData.valueOf(desiredItem);
+        } catch (final IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public void drawView() {

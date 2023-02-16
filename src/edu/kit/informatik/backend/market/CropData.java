@@ -12,22 +12,22 @@ public enum CropData {
     /**
      * Mushroom is a crop with high price and takes 4 rounds to grow.
      */
-    MUSHROOM("mushroom", "mushrooms", new int[] {12, 15, 16, 17, 20}, -1, 4),
+    MUSHROOM("mushrooms", new int[] {12, 15, 16, 17, 20}, -1, 4),
 
     /**
      * Carrot is a crop with low price and takes 1 round to grow.
      */
-    CARROT("carrot", "carrots", new int[] {3, 2, 2, 2, 1}, 1, 1),
+    CARROT("carrots", new int[] {3, 2, 2, 2, 1}, 1, 1),
 
     /**
      * Tomato is a crop with moderate price and takes 3 round to grow.
      */
-    TOMATO("tomato", "tomatoes", new int[] {3, 5, 6, 7, 9}, -1, 3),
+    TOMATO("tomatoes", new int[] {3, 5, 6, 7, 9}, -1, 3),
 
     /**
      * Salad is a crop with moderate price and takes 2 round to grow.
      */
-    SALAD("salad", "salads", new int[] {6, 5, 4, 3, 2}, 1, 2);
+    SALAD("salads", new int[] {6, 5, 4, 3, 2}, 1, 2);
 
     /**
      * {@code CropDatas} that are connected together in price.
@@ -35,7 +35,6 @@ public enum CropData {
      * price will be affected.
      */
 
-    private final String identifier;
     private final String pluralIdentifier;
     private final int[] possiblePrices;
     private final int priceIndexChange;
@@ -51,8 +50,7 @@ public enum CropData {
         SALAD.setConnectedPriceCrop(TOMATO);
     }
 
-    CropData(String identifier, String pluralIdentifier, int[] possiblePrices, int priceIndexChange, int roundsToGrow) {
-        this.identifier = identifier;
+    CropData(String pluralIdentifier, int[] possiblePrices, int priceIndexChange, int roundsToGrow) {
         this.pluralIdentifier = pluralIdentifier;
         this.possiblePrices = possiblePrices;
         this.priceIndexChange = priceIndexChange;
@@ -84,7 +82,7 @@ public enum CropData {
      * @return identifier of this crop
      */
     public String getIdentifier() {
-        return this.identifier;
+        return this.name().toLowerCase();
     }
 
     /**
@@ -134,7 +132,7 @@ public enum CropData {
      * Get {@code CropData} that should have their price changes dependent
      * to this {@code CropData}.
      *
-     * @return cropdata where the price is connected to this cropdata.
+     * @return {@code CropData} where the price is connected to this {@code CropData}.
      */
     public CropData getPriceConnectedData() {
         return this.connectedPriceCrop;

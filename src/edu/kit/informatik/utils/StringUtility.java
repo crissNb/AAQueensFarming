@@ -10,6 +10,8 @@ import java.util.Map;
  * @author ufzwe
  */
 public final class StringUtility {
+    private static final String MAP_ELEMENT_ALIGN_FORMAT = "%%-%ds%s%%%ds%%n";
+
     private StringUtility() {
     }
 
@@ -17,22 +19,26 @@ public final class StringUtility {
      * Aligns the keys of a map with a specified String and returns an array of
      * formatted strings.
      * 
-     * @param source      a map containing key-value pairs
-     * @param alignString the character to use before padding the keys
-     * @return a string, where each key-value pair is formatted with the
-     *         key padded to the same width
+     * @param source    a map containing key-value pairs
+     * @param separator the character to use before padding the keys
+     * @param width     of each line. The spacing between key-value pair
+     *                  will be determined using this value
+     * @return a string, where each key-value pair is formatted with spacing
+     *         between key and value.
      */
-    public static String alignStrings(Map<String, Integer> source, String alignString) {
-        // Find the length of longest key String
-        int longestKey = source.keySet().stream()
-                .mapToInt(String::length)
-                .max()
-                .orElse(0);
-
+    public static String alignMap(Map<String, Integer> source, int width, String separator) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, Integer> entry : source.entrySet()) {
-            sb.append(String.format("%-" + longestKey + "s%s%s", entry.getKey(), alignString,
-                    entry.getValue())).append(System.lineSeparator());
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+
+            // Calculate the number of digits in the value
+            int valueWidth = (int) Math.log10(value) + 1;
+
+            // Create a format String that adds spacing between key-value pair
+            String format = MAP_ELEMENT_ALIGN_FORMAT.formatted(width - valueWidth, separator, valueWidth);
+
+            sb.append(format.formatted(key, value));
         }
 
         return sb.toString();

@@ -27,13 +27,13 @@ public class Player {
     }
 
     /**
-     * Add specified amount to the current balance of this
+     * Change specified amount to the current balance of this
      * {@code Player}
      *
      * @param amount to add to current balance
      * @return current gold amount
      */
-    public int addGold(int amount) {
+    public int changeGold(int amount) {
         gold += amount;
 
         return gold;

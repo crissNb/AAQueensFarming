@@ -15,8 +15,15 @@ import edu.kit.informatik.utils.StringUtility;
  */
 public class MarketView {
     private static final String ITEM_DISPLAY_SEPARATOR = ":";
+    private static final int ITEM_DISPLAY_WIDTH = 13;
 
-    public void renderPrices(Map<String, Integer> priceData) {
-        Renderer.getInstance().draw(StringUtility.alignStrings(priceData, ITEM_DISPLAY_SEPARATOR));
+    /**
+     * Sends price data as an input to {@code Renderer} to display the current
+     * crops on sale. Performs necessary String formatting beforehand.
+     *
+     * @param priceData that will be displayed via {@code Renderer}
+     */
+    public void renderCropPrices(Map<String, Integer> priceData) {
+        Renderer.getInstance().draw(StringUtility.alignMap(priceData, ITEM_DISPLAY_WIDTH, ITEM_DISPLAY_SEPARATOR));
     }
 }
