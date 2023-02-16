@@ -46,6 +46,6 @@ public class MarketController {
     }
 
     public void drawView() {
-        view.renderPrices(model.getCropsOnSale());
+        view.renderCropPrices(model.getCropsOnSale());
     }
 }
