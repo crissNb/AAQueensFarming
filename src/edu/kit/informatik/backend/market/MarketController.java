@@ -3,6 +3,7 @@ package edu.kit.informatik.backend.market;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.kit.informatik.frontend.MarketView;
 import edu.kit.informatik.backend.GameItem;
 import edu.kit.informatik.backend.Player;
 
@@ -18,7 +19,7 @@ public class MarketController {
     private final Market model;
     private final MarketView view;
 
-    private final Map<CropData, Integer> accumulatedSales;
+    private Map<CropData, Integer> accumulatedSales;
 
     public MarketController(Market model, MarketView view) {
         this.model = model;

@@ -12,22 +12,22 @@ public enum CropData {
     /**
      * Mushroom is a crop with high price and takes 4 rounds to grow.
      */
-    MUSHROOM("mushroom", "mushrooms", new int[] { 12, 15, 16, 17, 20 }, 4),
+    MUSHROOM("mushroom", "mushrooms", new int[] {12, 15, 16, 17, 20}, -1, 4),
 
     /**
      * Carrot is a crop with low price and takes 1 round to grow.
      */
-    CARROT("carrot", "carrots", new int[] { 3, 2, 2, 2, 1 }, 1),
+    CARROT("carrot", "carrots", new int[] {3, 2, 2, 2, 1}, 1, 1),
 
     /**
      * Tomato is a crop with moderate price and takes 3 round to grow.
      */
-    TOMATO("tomato", "tomatoes", new int[] { 3, 5, 6, 7, 9 }, 3),
+    TOMATO("tomato", "tomatoes", new int[] {3, 5, 6, 7, 9}, -1, 3),
 
     /**
      * Salad is a crop with moderate price and takes 2 round to grow.
      */
-    SALAD("salad", "salads", new int[] { 6, 5, 4, 3, 2 }, 2);
+    SALAD("salad", "salads", new int[] {6, 5, 4, 3, 2}, 1, 2);
 
     /**
      * {@code CropDatas} that are connected together in price.
@@ -38,6 +38,7 @@ public enum CropData {
     private final String identifier;
     private final String pluralIdentifier;
     private final int[] possiblePrices;
+    private final int priceIndexChange;
     private final int roundsToGrow;
 
     private CropData connectedPriceCrop;
@@ -50,10 +51,11 @@ public enum CropData {
         SALAD.setConnectedPriceCrop(TOMATO);
     }
 
-    CropData(String identifier, String pluralIdentifier, int[] possiblePrices, int roundsToGrow) {
+    CropData(String identifier, String pluralIdentifier, int[] possiblePrices, int priceIndexChange, int roundsToGrow) {
         this.identifier = identifier;
         this.pluralIdentifier = pluralIdentifier;
         this.possiblePrices = possiblePrices;
+        this.priceIndexChange = priceIndexChange;
         this.roundsToGrow = roundsToGrow;
     }
 
@@ -96,15 +98,6 @@ public enum CropData {
     }
 
     /**
-     * Get the initial price of this crop.
-     *
-     * @return price in integer that is in the middle of the possible prices array
-     */
-    public int getStartingPrice() {
-        return this.possiblePrices[this.possiblePrices.length / 2];
-    }
-
-    /**
      * Get the price of this crop out of possible values.
      *
      * @param index from the possible values array
@@ -115,6 +108,15 @@ public enum CropData {
     }
 
     /**
+     * Get the number of possible price values.
+     *
+     * @return the array length of possible price.
+     */
+    public int getPossiblePriceCount() {
+        return this.possiblePrices.length;
+    }
+
+    /**
      * Get the number of rounds that is required for this crop to
      * grow.
      *
@@ -122,6 +124,10 @@ public enum CropData {
      */
     public int getRoundsToGrow() {
         return this.roundsToGrow;
+    }
+
+    public int getPriceIndexChange() {
+        return this.priceIndexChange;
     }
 
     /**

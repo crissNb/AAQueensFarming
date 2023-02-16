@@ -22,7 +22,7 @@ public final class StringUtility {
      * @return a string, where each key-value pair is formatted with the
      *         key padded to the same width
      */
-    public static String alignStrings(Map<String, String> source, String alignString) {
+    public static String alignStrings(Map<String, Integer> source, String alignString) {
         // Find the length of longest key String
         int longestKey = source.keySet().stream()
                 .mapToInt(String::length)
@@ -30,7 +30,7 @@ public final class StringUtility {
                 .orElse(0);
 
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> entry : source.entrySet()) {
+        for (Map.Entry<String, Integer> entry : source.entrySet()) {
             sb.append(String.format("%-" + longestKey + "s%s%s", entry.getKey(), alignString,
                     entry.getValue())).append(System.lineSeparator());
         }
