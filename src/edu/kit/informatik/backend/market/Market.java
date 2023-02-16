@@ -1,11 +1,7 @@
 package edu.kit.informatik.backend.market;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-
-import edu.kit.informatik.backend.GameItem;
-import edu.kit.informatik.backend.Player;
 
 /**
  * A {@code Market} is an object that can be interacted with
@@ -15,34 +11,21 @@ import edu.kit.informatik.backend.Player;
  * @version 1.0
  */
 public class Market {
-    private final List<VegetableShopItem> vegetablesOnSale;
+    private final Map<CropData, Integer> cropsOnSale;
 
     /**
      * Initialize {@code Market} object by stocking up items
      */
     public Market() {
-        vegetablesOnSale = new ArrayList<>();
+        cropsOnSale = new HashMap<>();
 
-        for (VegetableData data : VegetableData.values()) {
-            vegetablesOnSale.add(new VegetableShopItem(data));
+        // Put all crops from crop data to market with their starting price
+        for (CropData data : CropData.values()) {
+            cropsOnSale.put(data, data.getStartingPrice());
         }
     }
 
-    /**
-     * Purchase desired item to a customer.
-     * If customer is unable to purchase goods (e.g. not enough balance),
-     * no goods will be purchased.
-     *
-     * @param customer    whom the item will be purchased for
-     * @param desiredItem that will be purchased
-     * @return item once successfully purchased, null if fails
-     */
-    public GameItem purchaseItem(Player customer, String desiredItem) {
-        return null;
-    }
-
-    private void updatePrices() {
-        for (Map.Entry<VegetableData, VegetableData> entry : VegetableData.priceConnections.entrySet()) {
-        }
+    public Map<CropData, Integer> getCropsOnSale() {
+        return this.cropsOnSale;
     }
 }

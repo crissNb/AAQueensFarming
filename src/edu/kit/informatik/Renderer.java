@@ -46,7 +46,7 @@ public final class Renderer {
         return instance;
     }
 
-    private void draw(String string) {
+    public void draw(String string) {
         System.out.println(string);
     }
 }

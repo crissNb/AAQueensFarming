@@ -1,11 +1,8 @@
 package edu.kit.informatik.backend.market;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * {@code VegetableData} consists of all possible vegetables in the game.
- * Each vegetable has their corresponding data set appropriately
+ * {@code CropData} consists of all possible crops in the game.
+ * Each crop has their corresponding data set appropriately
  * to match the gameplay.
  *
  * @author ufzwe
@@ -13,40 +10,44 @@ import java.util.Map;
  */
 public enum CropData {
     /**
-     * Mushroom is a vegetable with high price and takes 4 rounds to grow.
+     * Mushroom is a crop with high price and takes 4 rounds to grow.
      */
-    MUSHROOM("mushroom", "mushrooms", new int[]{12, 15, 16, 17, 20}, 4),
+    MUSHROOM("mushroom", "mushrooms", new int[] { 12, 15, 16, 17, 20 }, 4),
 
     /**
-     * Carrot is a vegetable with low price and takes 1 round to grow.
+     * Carrot is a crop with low price and takes 1 round to grow.
      */
-    CARROT("carrot", "carrots", new int[]{3, 2, 2, 2, 1}, 1),
+    CARROT("carrot", "carrots", new int[] { 3, 2, 2, 2, 1 }, 1),
 
     /**
-     * Tomato is a vegetable with moderate price and takes 3 round to grow.
+     * Tomato is a crop with moderate price and takes 3 round to grow.
      */
-    TOMATO("tomato", "tomatoes", new int[]{3, 5, 6, 7, 9}, 3),
+    TOMATO("tomato", "tomatoes", new int[] { 3, 5, 6, 7, 9 }, 3),
 
     /**
-     * Salad is a vegetable with moderate price and takes 2 round to grow.
+     * Salad is a crop with moderate price and takes 2 round to grow.
      */
-    SALAD("salad", "salads", new int[]{6, 5, 4, 3, 2}, 2);
+    SALAD("salad", "salads", new int[] { 6, 5, 4, 3, 2 }, 2);
 
     /**
-     * {@code VegetableDatas} that are connected together in price.
-     * In other words, if one vegetable's price varies, the connected vegetable's
+     * {@code CropDatas} that are connected together in price.
+     * In other words, if one crop's price varies, the connected crop's
      * price will be affected.
      */
-    public static Map<CropData, CropData> priceConnections = new HashMap<>();
 
     private final String identifier;
     private final String pluralIdentifier;
     private final int[] possiblePrices;
     private final int roundsToGrow;
 
+    private CropData connectedPriceCrop;
+
     static {
-        priceConnections.put(MUSHROOM, CARROT);
-        priceConnections.put(TOMATO, SALAD);
+        MUSHROOM.setConnectedPriceCrop(CARROT);
+        CARROT.setConnectedPriceCrop(MUSHROOM);
+
+        TOMATO.setConnectedPriceCrop(SALAD);
+        SALAD.setConnectedPriceCrop(TOMATO);
     }
 
     CropData(String identifier, String pluralIdentifier, int[] possiblePrices, int roundsToGrow) {
@@ -57,33 +58,79 @@ public enum CropData {
     }
 
     /**
-     * Gets the name of this vegetable
+     * Find {@code CropData} with provided identifier. Returns null,
+     * if {@code CropData} of the provided identifier does not exist.
      *
-     * @return identifier of this vegetable
+     * @param identifier String in which the CropData has
+     * @return {@code CropData} with provided identifier, null if can't be found
      */
-    public String getIdentifier() {
-        return identifier;
+    public static CropData getCropDate(String identifier) {
+        for (CropData data : CropData.values()) {
+            return data;
+        }
+
+        return null;
+    }
+
+    private void setConnectedPriceCrop(CropData cropData) {
+        this.connectedPriceCrop = cropData;
     }
 
     /**
-     * Gets the english plural form of this vegetable
+     * Gets the name of this crop
+     *
+     * @return identifier of this crop
+     */
+    public String getIdentifier() {
+        return this.identifier;
+    }
+
+    /**
+     * Gets the english plural form of this crop
      * for display purposes
      *
-     * @return plural identifier of this vegetable
+     * @return plural identifier of this crop
      */
     public String getPluralIdentifier() {
-        return pluralIdentifier;
+        return this.pluralIdentifier;
     }
 
-    public int[] getPossiblePrices() {
-        return possiblePrices;
+    /**
+     * Get the initial price of this crop.
+     *
+     * @return price in integer that is in the middle of the possible prices array
+     */
+    public int getStartingPrice() {
+        return this.possiblePrices[this.possiblePrices.length / 2];
     }
 
+    /**
+     * Get the price of this crop out of possible values.
+     *
+     * @param index from the possible values array
+     * @return price in integer at a specified index in possible prices array
+     */
+    public int getPrice(int index) {
+        return this.possiblePrices[index];
+    }
+
+    /**
+     * Get the number of rounds that is required for this crop to
+     * grow.
+     *
+     * @return get rounds to grow this crop in Integer
+     */
     public int getRoundsToGrow() {
-        return roundsToGrow;
+        return this.roundsToGrow;
     }
 
+    /**
+     * Get {@code CropData} that should have their price changes dependent
+     * to this {@code CropData}.
+     *
+     * @return cropdata where the price is connected to this cropdata.
+     */
     public CropData getPriceConnectedData() {
-        return priceConnections.get(this);
+        return this.connectedPriceCrop;
     }
 }
