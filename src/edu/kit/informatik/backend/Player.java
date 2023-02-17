@@ -31,9 +31,14 @@ public class Player {
      * {@code Player}
      *
      * @param amount to add to current balance
+     * @throws NoGoldException if player will have less than 0 gold after changes
      * @return current gold amount
      */
-    public int changeGold(int amount) {
+    public int changeGold(int amount) throws NoGoldException {
+        if (gold + amount < 0) {
+            throw new NoGoldException();
+        }
+
         gold += amount;
 
         return gold;

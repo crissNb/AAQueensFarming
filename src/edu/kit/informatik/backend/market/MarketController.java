@@ -6,6 +6,7 @@ import java.util.Map;
 import edu.kit.informatik.frontend.MarketView;
 import edu.kit.informatik.backend.GameItem;
 import edu.kit.informatik.backend.Player;
+import edu.kit.informatik.backend.NoCropFoundException;
 
 /**
  * Using the MVC pattern, a {@code MarketController} will be used to
@@ -33,16 +34,20 @@ public class MarketController {
      * If customer is unable to purchase goods (e.g. not enough balance),
      * no goods will be purchased.
      *
-     * @param customer    whom the item will be purchased for
-     * @param desiredItem that will be purchased
+     * @param customer        whom the item will be purchased for
+     * @param desiredCropName that will be purchased
+     * @throws NoCropFoundException if desiredItem cannot be found
      * @return item once successfully purchased, null if fails
      */
-    public GameItem purchaseItem(Player customer, String desiredItem) {
+    public GameItem purchaseCrop(Player customer, String desiredCropName) throws NoCropFoundException {
         try {
-            CropData desiredCrop = CropData.valueOf(desiredItem);
+            CropData desiredCrop = CropData.valueOf(desiredCropName.toUpperCase());
         } catch (final IllegalArgumentException e) {
             return null;
         }
+    }
+
+    private GameItem purchaseItem() {
     }
 
     public void drawView() {
