@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 public class Market {
+    // Key represents the type of the Crop, Value represents the index
+    // of the possible price array in {@code CropData}.
     private final Map<CropData, Integer> cropsOnSale;
 
     /**
@@ -65,5 +67,9 @@ public class Market {
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getIdentifier(),
                         entry -> entry.getKey().getPrice(entry.getValue())));
+    }
+
+    public int getPrice(CropData cropData) {
+        return cropData.getPrice(cropsOnSale.get(cropData));
     }
 }

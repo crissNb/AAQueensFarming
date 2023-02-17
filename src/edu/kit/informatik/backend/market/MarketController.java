@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.kit.informatik.frontend.MarketView;
-import edu.kit.informatik.backend.GameItem;
+import edu.kit.informatik.backend.Crop;
 import edu.kit.informatik.backend.Player;
-import edu.kit.informatik.backend.NoCropFoundException;
 
 /**
  * Using the MVC pattern, a {@code MarketController} will be used to
@@ -36,18 +35,17 @@ public class MarketController {
      *
      * @param customer        whom the item will be purchased for
      * @param desiredCropName that will be purchased
-     * @throws NoCropFoundException if desiredItem cannot be found
+     * @throws IllegalArgumentException if desiredItem cannot be found
      * @return item once successfully purchased, null if fails
      */
-    public GameItem purchaseCrop(Player customer, String desiredCropName) throws NoCropFoundException {
+    public Crop purchaseCrop(Player customer, String desiredCropName) throws IllegalArgumentException {
         try {
             CropData desiredCrop = CropData.valueOf(desiredCropName.toUpperCase());
+            customer.changeGold(model.getPrice(desiredCrop));
+            return new Crop(desiredCrop);
         } catch (final IllegalArgumentException e) {
             return null;
         }
-    }
-
-    private GameItem purchaseItem() {
     }
 
     public void drawView() {
